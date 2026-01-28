@@ -134,20 +134,4 @@
   .separator-galet {
     @apply h-px w-full bg-secondary;
   }
-
-  /* Style élégant italique serif (cohérence avec l'affiche publicitaire) */
-  .text-elegant {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  /* Hide scrollbar for thumbnails on mobile */
-  .scrollbar-hide {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-  .scrollbar-hide::-webkit-scrollbar {
-    display: none;
-  }
 }
