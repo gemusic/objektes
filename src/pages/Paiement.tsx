@@ -31,9 +31,8 @@ const Paiement = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const isCartouche = searchParams.get("produit") === "cartouche";
-  const montant = isCartouche ? 5000 : 14000;
-  const produitNom = isCartouche ? "Cartouche de rechange" : "Le Purificateur Haute Précision";
+  const montant = 14000;
+  const produitNom = "Le Purificateur Haute Précision (2 unités)";
   
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -198,13 +197,11 @@ Adresse: ${formData.adresse}
         </div>
 
         {/* Galerie Produit */}
-        {!isCartouche && (
-          <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.15s" }}>
-            <h2 className="font-serif text-xl mb-4">Votre Sélection</h2>
-            <div className="h-px w-full bg-secondary mb-6" />
-            <ProductCarousel />
-          </section>
-        )}
+        <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+          <h2 className="font-serif text-xl mb-4">Votre Sélection</h2>
+          <div className="h-px w-full bg-secondary mb-6" />
+          <ProductCarousel />
+        </section>
 
         {/* Récapitulatif */}
         <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
@@ -214,7 +211,7 @@ Adresse: ${formData.adresse}
           <div className="p-6 bg-secondary/20 rounded-lg space-y-3">
             <div className="flex justify-between">
               <span className="text-foreground/70">
-                {isCartouche ? "Cartouche de rechange" : "Sélection n°1 : Le Purificateur Haute Précision"}
+                Sélection n°1 : Le Purificateur Haute Précision (2 unités)
               </span>
               <span className="font-medium">{montant.toLocaleString()} FCFA</span>
             </div>
@@ -229,11 +226,9 @@ Adresse: ${formData.adresse}
             </div>
           </div>
           
-          {!isCartouche && (
-            <p className="text-sm text-muted-foreground mt-4 text-center">
-              Chaque filtre offre 6 semaines de filtration, soit 3 mois d'eau pure pour deux produits.
-            </p>
-          )}
+          <p className="text-sm text-muted-foreground mt-4 text-center">
+            Chaque unité offre environ 3 mois de filtration — soit 6 mois d'eau pure pour vos deux unités.
+          </p>
         </section>
 
         {/* Coordonnées */}

@@ -42,7 +42,7 @@ const Index = () => {
               Sélectionner — 14 000 FCFA
             </Link>
             <p className="text-sm text-muted-foreground mt-4">
-              Deux produits disponibles, chacun offrant 6 semaines de filtration — soit 3 mois d'eau pure.
+              Deux unités incluses, chacune offrant environ 3 mois de filtration — soit 6 mois d'eau pure.
             </p>
           </div>
         </div>
@@ -110,9 +110,9 @@ const Index = () => {
             </div>
             <h3 className="font-serif text-xl mb-4">La Clarté</h3>
             <p className="text-foreground/70 leading-relaxed">
-              Finies les bonbonnes de 25L et le coût des packs d'eau. 14 000 FCFA pour 6 semaines 
-              de filtration, soit 3 mois d'eau pure pour deux produits. Votre esprit et votre budget 
-              respirent enfin.
+              Finies les bonbonnes de 25L et le coût des packs d'eau. 14 000 FCFA pour deux unités, 
+              chacune offrant environ 3 mois de filtration — soit 6 mois d'eau pure. Votre esprit 
+              et votre budget respirent enfin.
             </p>
           </div>
 
