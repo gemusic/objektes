@@ -1,92 +1,46 @@
 
 
-# Plan : Ajout des Miniatures Produit au Carousel
+# Plan : Mise à jour de la clé API KKiaPay pour le paiement fonctionnel
 
-## Objectif
-Remplacer les indicateurs a points (dots) actuels par des miniatures cliquables des images produit pour une meilleure experience utilisateur sur la page de paiement.
+## Problème identifié
 
----
+La clé publique KKiaPay dans le code est incorrecte :
+- **Actuelle** : `48c07950f5b311f08be3614e2775ba11`
+- **Correcte** : `be93f6efefe24a436e8b22c95e490373b2dbc283`
 
-## Modification a effectuer
-
-**Fichier** : `src/components/ProductCarousel.tsx`
-
-### Changements
-
-**1. Remplacement de la section "Dots Navigation" (lignes 92-107)**
-
-La section actuelle avec les petits points sera remplacee par une rangee de miniatures cliquables.
-
-**2. Structure des miniatures**
-
-```text
-+----------------------------------------+
-|                                        |
-|         Image Principale               |
-|        (grande, swipeable)             |
-|                                        |
-+----------------------------------------+
-|  [img1] [img2] [img3] [img4] [img5] [img6]  |
-|    ^                                   |
-|   actif (bordure terracotta)           |
-+----------------------------------------+
-```
-
-**3. Specifications visuelles**
-
-| Element | Style |
-|---------|-------|
-| Taille miniature | 60x60px (w-15 h-15) |
-| Coins | Arrondis (rounded-lg, ~8px) |
-| Espacement | gap-2 (8px entre chaque) |
-| Miniature active | Bordure Terracotta 2px + opacite 100% |
-| Miniatures inactives | Bordure grise fine 1px + opacite 70% |
-| Transition | Fluide (transition-all duration-300) |
-
-**4. Comportement**
-
-- Clic sur une miniature = navigation directe vers cette image (`scrollTo(index)`)
-- Sur mobile : conteneur scrollable horizontalement si necessaire (`overflow-x-auto`)
-- Synchronisation automatique avec le swipe de l'image principale
+Le mode `sandbox: false` est déjà correctement configuré pour la production.
 
 ---
 
-## Code a implementer
+## Modification à effectuer
 
-Remplacer les lignes 92-107 (section Dots Navigation) par :
+**Fichier** : `src/pages/Paiement.tsx`
+
+**Ligne 14** : Mettre à jour la constante `KKIAPAY_PUBLIC_KEY`
 
 ```tsx
-{/* Thumbnails Navigation */}
-<div className="flex justify-center gap-2 mt-4 overflow-x-auto pb-2">
-  {productImages.map((image, index) => (
-    <button
-      key={index}
-      onClick={() => scrollTo(index)}
-      className={cn(
-        "flex-shrink-0 w-15 h-15 rounded-lg overflow-hidden transition-all duration-300",
-        selectedIndex === index
-          ? "ring-2 ring-primary ring-offset-2 opacity-100"
-          : "ring-1 ring-secondary opacity-70 hover:opacity-100"
-      )}
-      aria-label={`Voir image ${index + 1}`}
-    >
-      <img
-        src={image.src}
-        alt={image.alt}
-        className="w-full h-full object-cover"
-      />
-    </button>
-  ))}
-</div>
+// Avant
+const KKIAPAY_PUBLIC_KEY = "48c07950f5b311f08be3614e2775ba11";
+
+// Après
+const KKIAPAY_PUBLIC_KEY = "be93f6efefe24a436e8b22c95e490373b2dbc283";
 ```
 
 ---
 
-## Resultat Attendu
+## Note de sécurité concernant la clé secrète
 
-- 6 miniatures alignees horizontalement sous l'image principale
-- Miniature active clairement identifiee par une bordure Terracotta
-- Navigation instantanee au clic sur n'importe quelle miniature
-- Experience tactile fluide sur mobile avec scrollable horizontal
-- Coherence visuelle avec le design objekté et l'affiche publicitaire
+La clé secrète (`sk_be1df9e...`) que tu as fournie ne doit **jamais** être ajoutée dans le code frontend. Elle sert uniquement pour les opérations côté serveur (vérification de transactions, remboursements, etc.).
+
+Pour le moment, le paiement fonctionne avec la clé publique seule - c'est le fonctionnement standard de KKiaPay.
+
+---
+
+## Résultat attendu
+
+Après cette modification :
+- Le widget KKiaPay s'ouvrira correctement
+- Les paiements Mobile Money (MTN MoMo / Moov Money) fonctionneront
+- Les paiements par carte bancaire fonctionneront
+- Les clients seront redirigés vers la page de confirmation après un paiement réussi
 
