@@ -11,7 +11,7 @@ const WHATSAPP_NUMBER = "+22996991128";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace("+", "")}`;
 
 // KKiaPay Configuration
-const KKIAPAY_PUBLIC_KEY = "48c07950f5b311f08be3614e2775ba11";
+const KKIAPAY_PUBLIC_KEY = "be93f6efefe24a436e8b22c95e490373b2dbc283";
 
 // SMTP Configuration (côté client comme demandé)
 const SMTP_CONFIG = {
