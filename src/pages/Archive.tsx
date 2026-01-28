@@ -88,24 +88,24 @@ const Archive = () => {
         <div className="h-px w-full bg-secondary" />
       </div>
 
-      {/* Section Accès aux Consommables */}
+      {/* Section Renouvellement */}
       <section className="max-w-4xl mx-auto px-6 py-20 text-center">
         <h2 className="font-serif text-2xl mb-6">
-          Besoin d'une cartouche de rechange pour votre Purificateur ?
+          Besoin de renouveler vos unités de filtration ?
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-          Les composants essentiels de nos objets archivés restent disponibles 
-          pour garantir leur pérennité.
+          Après 6 mois d'utilisation, vos deux unités auront accompli leur mission. 
+          Renouvelez-les pour continuer à profiter d'une eau pure.
         </p>
         <Link
-          to="/paiement?produit=cartouche"
+          to="/paiement"
           className="inline-block bg-primary text-primary-foreground px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
         >
-          Commander une Cartouche — 5 000 FCFA
+          Commander 2 nouvelles unités — 14 000 FCFA
         </Link>
         <p className="text-sm text-foreground/50 mt-6">
-          Même quand nous passons à l'Objet n°02, vous pouvez toujours maintenir 
-          vos anciens objets à leur performance maximale.
+          Même quand nous passons à la Sélection n°2, vous pouvez toujours maintenir 
+          vos objets à leur performance maximale.
         </p>
       </section>
 

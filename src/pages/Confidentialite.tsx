@@ -93,7 +93,7 @@ const Confidentialite = () => {
             <p className="text-foreground/80 leading-relaxed">
               Vos informations sont stockées sur des serveurs sécurisés. Nous conservons vos données 
               de livraison pour une durée de 2 ans afin de faciliter votre service après-vente et 
-              la gestion des consommables (cartouches de rechange).
+              la gestion des renouvellements (unités de filtration).
             </p>
           </section>
 

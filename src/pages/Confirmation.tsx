@@ -25,9 +25,9 @@ const Confirmation = () => {
     email = ""
   } = state;
 
-  // Calcul de la date de renouvellement (3 mois)
+  // Calcul de la date de renouvellement (6 mois)
   const renewalDate = new Date();
-  renewalDate.setMonth(renewalDate.getMonth() + 3);
+  renewalDate.setMonth(renewalDate.getMonth() + 6);
   const formattedRenewalDate = renewalDate.toLocaleDateString('fr-FR', {
     month: 'long',
     year: 'numeric'
@@ -191,7 +191,7 @@ const Confirmation = () => {
               <div>
                 <h2 className="font-serif text-lg mb-2">Votre Prochain Rendez-vous</h2>
                 <p className="text-sm text-foreground/70 leading-relaxed mb-4">
-                  Dans environ 3 mois, votre cartouche aura accompli sa mission de purification. 
+                  Dans environ 6 mois, vos deux unités auront accompli leur mission de purification. 
                   Nous serons là pour vous accompagner dans le renouvellement — sans effort, sans oubli.
                 </p>
                 <p className="text-sm">

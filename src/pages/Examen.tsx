@@ -91,7 +91,7 @@ const Examen = () => {
               Le filtre est rentabilisé en moins de 30 jours.
             </p>
             <p className="text-foreground/80 leading-relaxed mt-2">
-              <strong>Bonus :</strong> chaque filtre dure 6 semaines, soit 3 mois d'eau propre pour deux filtres.
+              <strong>Bonus :</strong> vous recevez deux unités, chacune offrant environ 3 mois de filtration — soit 6 mois d'eau pure au total.
             </p>
           </div>
         </div>
@@ -118,14 +118,14 @@ const Examen = () => {
             <h3 className="font-serif text-lg mb-3">Levier Intelligent</h3>
             <p className="text-sm text-foreground/70">
               Un geste simple pour passer de l'eau filtrée (boisson, cuisine) à l'eau brute (vaisselle). 
-              La cartouche dure plus longtemps et reste efficace.
+              L'unité dure plus longtemps et reste efficace.
             </p>
           </div>
           
           <div className="p-6 bg-secondary/20 rounded-lg">
             <h3 className="font-serif text-lg mb-3">Maintenance Simplifiée</h3>
             <p className="text-sm text-foreground/70">
-              Cartouche lavable et réutilisable jusqu'à 6 mois. Si le débit diminue, 
+              Unité lavable et réutilisable. Si le débit diminue, 
               un petit frottement avec le papier de verre fourni, et elle retrouve sa performance d'origine.
             </p>
           </div>
@@ -183,8 +183,7 @@ const Examen = () => {
           <div>
             <h3 className="font-serif text-xl mb-4">Contenu du coffret</h3>
             <ul className="space-y-2 text-foreground/80">
-              <li>• 1 Purificateur</li>
-              <li>• 1 Cartouche céramique</li>
+              <li>• 2 Purificateurs (unités de filtration)</li>
               <li>• Kit complet d'adaptateurs</li>
               <li>• 1 Papier de verre pour entretien</li>
             </ul>
