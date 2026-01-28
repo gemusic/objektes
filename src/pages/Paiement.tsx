@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import ProductCarousel from "@/components/ProductCarousel";
 
 const WHATSAPP_NUMBER = "+22996991128";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace("+", "")}`;
@@ -195,6 +196,15 @@ Adresse: ${formData.adresse}
             Paiement
           </h1>
         </div>
+
+        {/* Galerie Produit */}
+        {!isCartouche && (
+          <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.15s" }}>
+            <h2 className="font-serif text-xl mb-4">Votre Sélection</h2>
+            <div className="h-px w-full bg-secondary mb-6" />
+            <ProductCarousel />
+          </section>
+        )}
 
         {/* Récapitulatif */}
         <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
