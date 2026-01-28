@@ -1,95 +1,88 @@
 
 
-# Plan : Header Responsive + Carousel Produit sur la Page Paiement
+# Plan : Cohérence Visuelle avec l'Affiche Publicitaire + Miniatures Carousel
 
-## Problème Identifié
+## Analyse de l'Affiche Publicitaire
 
-### 1. Header non responsive
-Le header actuel affiche tous les liens de navigation sur une seule ligne, ce qui pose problème sur mobile où les éléments se chevauchent ou deviennent illisibles. Les clients sur smartphone (la majorité) ont une mauvaise expérience.
+L'affiche Meta Ads utilise une esthétique parfaitement alignée avec le site :
+- Fond beige/crème texturé (Sable Pâle) - deja OK sur le site
+- Typographie serif pour le logo et les titres - deja OK
+- Utilisation d'italiques pour les phrases descriptives (style elegant)
+- Couleur terracotta/ocre pour les elements importants (prix, liens)
+- Beaucoup d'espace negatif - deja OK
 
-### 2. Absence de galerie produit sur la page Paiement
-La page de paiement ne montre pas d'images du produit, ce qui réduit la confiance du client avant l'achat. Un carousel d'images permettrait de rassurer le client sur sa sélection.
-
----
-
-## Solution Proposée
-
-### Partie 1 : Header Responsive avec Menu Hamburger
-
-**Structure mobile (écrans < 768px) :**
-- Logo objekté centré (toujours visible)
-- Icône hamburger (menu) à droite
-- Au clic sur le menu : panneau latéral (Sheet) qui s'ouvre avec tous les liens de navigation
-- Animation fluide d'ouverture/fermeture
-
-**Structure desktop (écrans >= 768px) :**
-- Navigation gauche : "La Sélection", "L'Archive"
-- Logo centré
-- Navigation droite : "À Propos", "FAQ"
-- Comportement actuel conservé
-
-**Composants utilisés :**
-- Sheet (Radix UI) déjà disponible dans le projet
-- Icône Menu de Lucide React
-- Hook `useIsMobile` déjà existant dans le projet
-
-### Partie 2 : Carousel Produit sur la Page Paiement
-
-**Position :** En haut de la page, avant le récapitulatif de la sélection
-
-**Fonctionnalités :**
-- Affichage des 6 images produit (les anciennes + les nouvelles uploadées)
-- Navigation par swipe sur mobile (tactile)
-- Boutons précédent/suivant sur desktop
-- Indicateurs de dots en dessous pour montrer la position actuelle
-- Images en format carré/rectangulaire avec coins arrondis
-- Responsive : s'adapte à toutes les tailles d'écran
-
-**Images à intégrer (6 au total) :**
-1. img1-2.jpg (citron dans le verre)
-2. img2-2.jpg (main tenant le filtre)
-3. img3-2.jpg (ambiance tropicale)
-4. img4-2.jpg (arc-en-ciel de gouttes)
-5. Picsart_26-01-28_08-46-25-380.png (gros plan filtre)
-6. Picsart_26-01-28_08-44-14-292.jpg (kit complet avec cartouches)
+**Conclusion** : Le site est deja tres coherent avec l'affiche. Quelques ajustements typographiques mineurs peuvent renforcer cette coherence.
 
 ---
 
-## Détails Techniques
+## Modification 1 : Miniatures Cliquables pour le Carousel
 
-### Fichiers à modifier
+**Fichier concerne** : `src/components/ProductCarousel.tsx`
 
-**1. `src/components/layout/Header.tsx`**
-- Importer le composant Sheet et l'icône Menu
-- Ajouter un état pour gérer l'ouverture du menu mobile
-- Utiliser le hook `useIsMobile` pour détecter le type d'écran
-- Afficher le menu hamburger sur mobile, navigation classique sur desktop
+**Fonctionnalite** :
+Ajouter une rangee de miniatures en dessous de l'image principale qui permettent de naviguer rapidement entre les images.
 
-**2. `src/pages/Paiement.tsx`**
-- Importer le composant Carousel existant
-- Importer les 6 images produit
-- Ajouter une section "Galerie Produit" avec le carousel avant le récapitulatif
-- Ajouter des dots de navigation personnalisés
-- Style cohérent avec le design objekté (coins arrondis, espace négatif)
+**Structure visuelle** :
+```text
++----------------------------------------+
+|                                        |
+|         Image Principale               |
+|        (grande, swipeable)             |
+|                                        |
++----------------------------------------+
+|  [img1] [img2] [img3] [img4] [img5] [img6]  |
+|    ^                                   |
+|   actif (bordure terracotta)           |
++----------------------------------------+
+```
 
-### Nouvelles images à copier
-Les 6 images uploadées seront copiées dans `src/assets/` :
-- img1-2.jpg, img2-2.jpg, img3-2.jpg, img4-2.jpg
-- Picsart_26-01-28_08-46-25-380.png
-- Picsart_26-01-28_08-44-14-292.jpg
+**Comportement** :
+- Miniatures de 60x60px avec coins arrondis (8px)
+- Espacement de 8px entre chaque miniature
+- Miniature active : bordure terracotta (2px) + opacite 100%
+- Miniatures inactives : bordure grise fine (1px) + opacite 70%
+- Clic sur une miniature = navigation directe vers cette image
+- Sur mobile : miniatures scrollables horizontalement si necessaire
+- Transition fluide lors du changement d'image
+
+**Remplacement des dots** :
+Les miniatures remplaceront les dots actuels car elles offrent une meilleure experience utilisateur et montrent un apercu de chaque image.
 
 ---
 
-## Résultat Attendu
+## Modification 2 : Renforcement de la Coherence Typographique
 
-### Sur Mobile
-- Header compact avec logo centré et menu hamburger
-- Menu latéral élégant avec tous les liens
-- Carousel d'images swipeable avec les 6 photos du produit
-- Experience fluide et intuitive pour les clients smartphone
+**Fichier concerne** : `src/index.css`
 
-### Sur Desktop
-- Navigation classique conservée
-- Carousel avec flèches de navigation
-- Transition douce entre les images
+**Ajouts CSS** :
+Ajouter une classe utilitaire pour le style italique serif elegant utilise sur l'affiche :
+- `.text-elegant` : Applique la police serif en italique pour les citations et phrases descriptives premium
+
+**Usage sur les pages** :
+Cette classe pourra etre utilisee sur les phrases descriptives pour matcher le style "Protocole Hydratation" de l'affiche.
+
+---
+
+## Resume des Fichiers a Modifier
+
+| Fichier | Action |
+|---------|--------|
+| `src/components/ProductCarousel.tsx` | Ajout des miniatures cliquables sous l'image principale |
+| `src/index.css` | Ajout de la classe `.text-elegant` pour le style italique serif |
+
+---
+
+## Resultat Final
+
+### Page Paiement - Carousel Ameliore
+- Image principale grand format (swipeable sur mobile)
+- 6 miniatures cliquables en dessous
+- Miniature active clairement identifiee par une bordure terracotta
+- Navigation fluide entre les images
+
+### Coherence avec l'Affiche
+- Memes couleurs (Sable Pale, Anthracite, Terracotta)
+- Meme typographie serif elegante
+- Meme atmosphere calme et premium
+- Aucun dephasage visuel pour les visiteurs venant des Meta Ads
 
