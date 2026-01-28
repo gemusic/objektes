@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
-import { Check } from "lucide-react";
+import { Check, MessageCircle, Calendar, Package, Phone, Truck } from "lucide-react";
 
 const WHATSAPP_NUMBER = "+22996991128";
 const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace("+", "")}`;
@@ -25,131 +25,244 @@ const Confirmation = () => {
     email = ""
   } = state;
 
+  // Calcul de la date de renouvellement (3 mois)
+  const renewalDate = new Date();
+  renewalDate.setMonth(renewalDate.getMonth() + 3);
+  const formattedRenewalDate = renewalDate.toLocaleDateString('fr-FR', {
+    month: 'long',
+    year: 'numeric'
+  });
+
   return (
     <Layout>
-      <div className="max-w-2xl mx-auto px-6 py-20">
-        {/* Message de Confirmation */}
+      <div className="max-w-2xl mx-auto px-6 py-16 md:py-24">
+        
+        {/* Hero de Succès */}
         <section className="text-center mb-16">
-          <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-8 animate-fade-in">
-            <Check className="w-10 h-10 text-primary" />
+          {/* Cercle lumineux pulsant */}
+          <div className="relative w-24 h-24 mx-auto mb-10">
+            <div className="absolute inset-0 rounded-full bg-primary/20 animate-pulse-soft" />
+            <div className="absolute inset-2 rounded-full bg-primary/10 animate-pulse-soft" style={{ animationDelay: "0.5s" }} />
+            <div className="relative w-full h-full rounded-full bg-background border border-primary/30 flex items-center justify-center animate-scale-fade-in">
+              <Check className="w-10 h-10 text-primary" strokeWidth={1.5} />
+            </div>
           </div>
           
-          <h1 className="font-serif text-3xl md:text-4xl mb-4 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Sélection n°1 : Validée ✅
+          <h1 
+            className="font-serif text-3xl md:text-4xl mb-6 opacity-0 animate-slide-up" 
+            style={{ animationDelay: "0.15s" }}
+          >
+            Votre Sélection est Confirmée
           </h1>
           
-          <div className="space-y-4 text-foreground/80 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            <p>
-              Merci pour votre confiance{nom ? `, ${nom}` : ""}.
+          <div 
+            className="space-y-4 text-foreground/80 opacity-0 animate-slide-up" 
+            style={{ animationDelay: "0.25s" }}
+          >
+            <p className="font-serif text-lg italic">
+              {nom ? `Cher ${nom},` : "Cher client,"} bienvenue dans le cercle objekté.
             </p>
-            <p>
-              Votre paiement de <strong>{montant.toLocaleString()} FCFA</strong> a été reçu avec succès.
-            </p>
-            <p>
-              Vous venez d'investir dans votre santé, votre tranquillité et votre confort quotidien.
+            <p className="text-sm leading-relaxed max-w-md mx-auto">
+              Vous venez de poser un geste simple mais décisif pour votre santé 
+              et celle de vos proches. Un choix sans regret.
             </p>
           </div>
         </section>
 
-        {/* Détails de Transaction */}
-        <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.25s" }}>
-          <div className="p-6 bg-secondary/20 rounded-lg">
-            <h2 className="font-serif text-lg mb-4">Détails de la Transaction</h2>
-            <div className="space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-foreground/70">Produit</span>
-                <span>{produit}</span>
+        {/* Récapitulatif Élégant */}
+        <section 
+          className="mb-14 opacity-0 animate-slide-up" 
+          style={{ animationDelay: "0.35s" }}
+        >
+          <div className="p-8 border border-secondary rounded-sm bg-background">
+            <h2 className="font-serif text-sm tracking-widest uppercase text-foreground/60 mb-6">
+              Récapitulatif
+            </h2>
+            <div className="space-y-4 text-sm">
+              <div className="flex justify-between items-center">
+                <span className="text-foreground/60">Produit</span>
+                <span className="font-medium">{produit}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-foreground/70">Montant</span>
-                <span>{montant.toLocaleString()} FCFA</span>
+              <div className="h-px bg-secondary" />
+              <div className="flex justify-between items-center">
+                <span className="text-foreground/60">Montant</span>
+                <span className="font-medium">{montant.toLocaleString()} FCFA</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-foreground/70">Référence</span>
-                <span className="font-mono text-xs">{transactionId}</span>
+              <div className="h-px bg-secondary" />
+              <div className="flex justify-between items-center">
+                <span className="text-foreground/60">Référence</span>
+                <span className="font-mono text-xs text-foreground/70">{transactionId}</span>
               </div>
               {email && (
-                <div className="flex justify-between">
-                  <span className="text-foreground/70">Confirmation envoyée à</span>
-                  <span>{email}</span>
-                </div>
+                <>
+                  <div className="h-px bg-secondary" />
+                  <div className="flex justify-between items-center">
+                    <span className="text-foreground/60">Confirmation envoyée à</span>
+                    <span className="text-foreground/70">{email}</span>
+                  </div>
+                </>
               )}
             </div>
           </div>
         </section>
 
-        {/* Prochaine Étape */}
-        <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.3s" }}>
-          <h2 className="font-serif text-xl mb-4">Prochaine Étape</h2>
-          <div className="h-px w-full bg-secondary mb-6" />
+        {/* Timeline : Dans les Prochaines Heures */}
+        <section 
+          className="mb-14 opacity-0 animate-slide-up" 
+          style={{ animationDelay: "0.45s" }}
+        >
+          <h2 className="font-serif text-xl mb-2">Dans les Prochaines Heures</h2>
+          <p className="text-sm text-foreground/60 mb-8">
+            Votre expérience objekté commence maintenant.
+          </p>
           
-          <div className="space-y-4 text-foreground/80">
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-primary text-sm">1</span>
+          <div className="space-y-8">
+            {/* Étape 1 */}
+            <div 
+              className="flex gap-6 opacity-0 animate-slide-up" 
+              style={{ animationDelay: "0.55s" }}
+            >
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full border border-primary/30 bg-primary/5 flex items-center justify-center">
+                  <Package className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
+                <div className="w-px h-full bg-secondary mt-3" />
               </div>
-              <div>
-                <p className="font-medium">Email de confirmation</p>
-                <p className="text-sm text-foreground/60">
-                  Un email détaillé vient de vous être envoyé à l'adresse fournie.
+              <div className="pb-8">
+                <h3 className="font-medium mb-1">Préparation Soignée</h3>
+                <p className="text-sm text-foreground/60 leading-relaxed">
+                  Votre colis est préparé avec le soin réservé aux objets d'exception. 
+                  Emballage discret, protection optimale.
                 </p>
               </div>
             </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-primary text-sm">2</span>
+
+            {/* Étape 2 */}
+            <div 
+              className="flex gap-6 opacity-0 animate-slide-up" 
+              style={{ animationDelay: "0.65s" }}
+            >
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full border border-primary/30 bg-primary/5 flex items-center justify-center">
+                  <Phone className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
+                <div className="w-px h-full bg-secondary mt-3" />
               </div>
-              <div>
-                <p className="font-medium">Préparation en cours</p>
-                <p className="text-sm text-foreground/60">
-                  Votre colis est actuellement préparé par notre service logistique.
+              <div className="pb-8">
+                <h3 className="font-medium mb-1">Prise de Contact</h3>
+                <p className="text-sm text-foreground/60 leading-relaxed">
+                  Notre équipe vous contactera personnellement pour convenir 
+                  du moment idéal de livraison.
                 </p>
               </div>
             </div>
-            
-            <div className="flex items-start gap-4">
-              <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 mt-1">
-                <span className="text-primary text-sm">3</span>
+
+            {/* Étape 3 */}
+            <div 
+              className="flex gap-6 opacity-0 animate-slide-up" 
+              style={{ animationDelay: "0.75s" }}
+            >
+              <div className="flex flex-col items-center">
+                <div className="w-12 h-12 rounded-full border border-primary/30 bg-primary/5 flex items-center justify-center">
+                  <Truck className="w-5 h-5 text-primary" strokeWidth={1.5} />
+                </div>
               </div>
               <div>
-                <p className="font-medium">Livraison à Cotonou</p>
-                <p className="text-sm text-foreground/60">
-                  Un livreur vous contactera dans les 2 heures pour confirmer votre présence 
-                  et finaliser la remise en main propre.
+                <h3 className="font-medium mb-1">Remise en Main Propre</h3>
+                <p className="text-sm text-foreground/60 leading-relaxed">
+                  Livraison directe chez vous à Cotonou, sans intermédiaire. 
+                  Votre satisfaction est notre priorité.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Assistance Directe */}
-        <section className="mb-12 animate-fade-in" style={{ animationDelay: "0.35s" }}>
-          <h2 className="font-serif text-xl mb-4">Assistance Directe</h2>
-          <div className="h-px w-full bg-secondary mb-6" />
-          
-          <p className="text-foreground/80 mb-4">
-            Pour toute question urgente, notre concierge WhatsApp est disponible immédiatement :
-          </p>
-          <a
-            href={WHATSAPP_LINK}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block border border-foreground/20 px-6 py-3 text-sm tracking-widest uppercase transition-all duration-300 hover:bg-foreground/5"
-          >
-            Contacter le Service Client
-          </a>
+        {/* Votre Prochain Rendez-vous */}
+        <section 
+          className="mb-14 opacity-0 animate-slide-up" 
+          style={{ animationDelay: "0.85s" }}
+        >
+          <div className="p-8 bg-primary/5 rounded-sm border border-primary/10">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                <Calendar className="w-5 h-5 text-primary" strokeWidth={1.5} />
+              </div>
+              <div>
+                <h2 className="font-serif text-lg mb-2">Votre Prochain Rendez-vous</h2>
+                <p className="text-sm text-foreground/70 leading-relaxed mb-4">
+                  Dans environ 3 mois, votre cartouche aura accompli sa mission de purification. 
+                  Nous serons là pour vous accompagner dans le renouvellement — sans effort, sans oubli.
+                </p>
+                <p className="text-sm">
+                  <span className="text-foreground/60">Date estimée :</span>{" "}
+                  <span className="font-medium capitalize">{formattedRenewalDate}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Teaser Sélection n°2 */}
+        <section 
+          className="mb-14 opacity-0 animate-slide-up" 
+          style={{ animationDelay: "0.95s" }}
+        >
+          <div className="text-center py-10 border-t border-b border-secondary">
+            <p className="text-xs tracking-widest uppercase text-foreground/50 mb-4">
+              Bientôt
+            </p>
+            <h2 className="font-serif text-2xl mb-4">Sélection n°2</h2>
+            <p className="text-sm text-foreground/70 leading-relaxed max-w-md mx-auto mb-6">
+              Nous préparons déjà la prochaine pièce maîtresse de votre quotidien. 
+              Une sélection unique, choisie avec la même rigueur pour transformer 
+              un autre aspect de votre vie.
+            </p>
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block border border-foreground/20 px-6 py-3 text-xs tracking-widest uppercase transition-all duration-300 hover:bg-foreground/5"
+            >
+              Être informé en priorité
+            </a>
+          </div>
+        </section>
+
+        {/* Assistance Concierge */}
+        <section 
+          className="mb-14 opacity-0 animate-slide-up" 
+          style={{ animationDelay: "1.05s" }}
+        >
+          <div className="text-center">
+            <p className="text-sm text-foreground/60 mb-4">
+              Une question ? Notre concierge personnel est à votre disposition.
+            </p>
+            <a
+              href={WHATSAPP_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 border border-foreground/20 px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300 hover:bg-foreground/5"
+            >
+              <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
+              Contacter le Concierge
+            </a>
+          </div>
         </section>
 
         {/* Bouton Retour */}
-        <section className="text-center animate-fade-in" style={{ animationDelay: "0.4s" }}>
+        <section 
+          className="text-center opacity-0 animate-slide-up" 
+          style={{ animationDelay: "1.15s" }}
+        >
           <Link
             to="/"
             className="inline-block bg-primary text-primary-foreground px-10 py-5 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
           >
-            Retour à la Sélection
+            Retour à l'Accueil
           </Link>
         </section>
+
       </div>
     </Layout>
   );
