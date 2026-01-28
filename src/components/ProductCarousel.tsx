@@ -96,7 +96,7 @@ const ProductCarousel = () => {
             key={index}
             onClick={() => scrollTo(index)}
             className={cn(
-              "flex-shrink-0 w-15 h-15 rounded-lg overflow-hidden transition-all duration-300",
+              "flex-shrink-0 w-[60px] h-[60px] rounded-lg overflow-hidden transition-all duration-300",
               selectedIndex === index
                 ? "ring-2 ring-primary ring-offset-2 opacity-100"
                 : "ring-1 ring-secondary opacity-70 hover:opacity-100"
