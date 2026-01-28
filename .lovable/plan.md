@@ -1,141 +1,95 @@
 
 
-# Plan des Pages Restantes — OBJEKTÉ
+# Plan : Header Responsive + Carousel Produit sur la Page Paiement
 
-## Vue d'ensemble
-Ajout de 4 pages supplémentaires au site objekté, en respectant l'identité visuelle minimaliste premium établie (palette Sable Pâle, Anthracite, Terracotta, typographies serif/sans-serif, beaucoup d'espace vide).
+## Problème Identifié
 
----
+### 1. Header non responsive
+Le header actuel affiche tous les liens de navigation sur une seule ligne, ce qui pose problème sur mobile où les éléments se chevauchent ou deviennent illisibles. Les clients sur smartphone (la majorité) ont une mauvaise expérience.
 
-## Page 1 : L'Archive (La Lignée)
-
-### Section 1 — Introduction de la Collection
-- **Titre** : "La Cohérence du Temps" (typographie serif élégante)
-- **Sous-titre** : "Chaque objet sélectionné par objekté est conçu pour rester pertinent, même après avoir quitté le devant de la scène."
-- Texte d'introduction sur la trace des recherches et de l'exigence
-
-### Section 2 — Le Catalogue Silencieux
-Grille verticale très espacée avec 2 cartes :
-
-**Carte Sélection n°1** (style actif)
-- Numéro en serif italic : "Sélection n°1"
-- Titre : "Le Purificateur Haute Précision"
-- Badge statut : "Sélection Actuelle" (Terracotta)
-- Résumé : "La fin des bonbonnes à Cotonou. Une barrière de 7 couches entre le réseau et votre santé."
-- Bouton : "VOIR L'OBJET ACTUEL" → lien vers /examen
-
-**Carte Sélection n°00** (style grisé/opacité réduite)
-- Numéro : "Sélection n°00"
-- Titre : "[PROCHAINEMENT]"
-- Badge statut : "En cours de tests"
-- Résumé : "Nous testons actuellement durabilité et impact. La prochaine sélection ne sera révélée qu'une fois sa justesse confirmée."
-
-### Section 3 — Accès aux Consommables
-- Titre : "Besoin d'une cartouche de rechange pour votre Purificateur ?"
-- Texte explicatif sur la disponibilité des composants
-- Bouton CTA : "COMMANDER UNE CARTOUCHE — 5 000 FCFA" (lien vers page paiement avec paramètre cartouche)
-
-### Section 4 — Philosophie de l'Archive
-- Titre : "Pourquoi un seul objet à la fois ?"
-- 3 points philosophiques :
-  - Le bruit est l'ennemi de la clarté
-  - Attention totale et contrôle qualité absolu
-  - Place à la prochaine solution essentielle
-
-### Section 5 — Footer de Page
-- Citation : *"Une sélection passée n'est jamais obsolète, elle est simplement pérenne."*
-- Bouton : "RETOUR À LA SÉLECTION ACTUELLE" → lien vers accueil
+### 2. Absence de galerie produit sur la page Paiement
+La page de paiement ne montre pas d'images du produit, ce qui réduit la confiance du client avant l'achat. Un carousel d'images permettrait de rassurer le client sur sa sélection.
 
 ---
 
-## Page 2 : Politique de Confidentialité
+## Solution Proposée
 
-Page statique avec mise en page sobre et typographie claire.
+### Partie 1 : Header Responsive avec Menu Hamburger
 
-### Sections
-1. **Philosophie de Protection** — Promesse de calme et non-partage des données
-2. **Données Collectées** — Liste structurée (Identité, Contact, Logistique, Paiement)
-3. **Utilisation des Données** — 3 usages exclusifs listés
-4. **Sécurité et Conservation** — Serveurs sécurisés, durée 2 ans
-5. **Vos Droits** — Référence à la loi n° 2017-20 du Bénin, email de contact
-6. **Cookies** — Cookies techniques uniquement, pas de pistage
+**Structure mobile (écrans < 768px) :**
+- Logo objekté centré (toujours visible)
+- Icône hamburger (menu) à droite
+- Au clic sur le menu : panneau latéral (Sheet) qui s'ouvre avec tous les liens de navigation
+- Animation fluide d'ouverture/fermeture
 
-### Design
-- Titres numérotés en serif
-- Corps de texte en sans-serif
-- Séparateurs fins Gris Galet entre sections
-- Lien "Service Client" vers WhatsApp pour les demandes
+**Structure desktop (écrans >= 768px) :**
+- Navigation gauche : "La Sélection", "L'Archive"
+- Logo centré
+- Navigation droite : "À Propos", "FAQ"
+- Comportement actuel conservé
 
----
+**Composants utilisés :**
+- Sheet (Radix UI) déjà disponible dans le projet
+- Icône Menu de Lucide React
+- Hook `useIsMobile` déjà existant dans le projet
 
-## Page 3 : Conditions Générales de Vente (CGV)
+### Partie 2 : Carousel Produit sur la Page Paiement
 
-Page légale complète avec 8 articles structurés.
+**Position :** En haut de la page, avant le récapitulatif de la sélection
 
-### Articles
-1. **Objet** — Régit les ventes de l'Objet n°01 à Cotonou
-2. **Produits et Disponibilité** — Un seul objet à la fois, limite des stocks
-3. **Prix** — 14 000 FCFA, livraison gratuite
-4. **Commande et Paiement** — Validation, moyens de paiement, pas d'espèces
-5. **Livraison (Cotonou uniquement)** — Zone, délais (avant/après 12h), coordination
-6. **Droit de Rétractation et Retours** — Promesse "Sans Regret", 48h, conditions
-7. **Garantie et Service Après-Vente** — Support WhatsApp, limites de garantie
-8. **Litiges** — Solution amiable, tribunaux de Cotonou
+**Fonctionnalités :**
+- Affichage des 6 images produit (les anciennes + les nouvelles uploadées)
+- Navigation par swipe sur mobile (tactile)
+- Boutons précédent/suivant sur desktop
+- Indicateurs de dots en dessous pour montrer la position actuelle
+- Images en format carré/rectangulaire avec coins arrondis
+- Responsive : s'adapte à toutes les tailles d'écran
 
-### Design
-- Structure juridique claire avec numérotation
-- Sous-sections avec puces
-- Mise en évidence des points clés (délais, prix, garantie)
-
----
-
-## Page 4 : Mentions Légales
-
-Page d'information légale obligatoire.
-
-### Sections
-1. **Éditeur du Site** — Informations avec champs à compléter [PLACEHOLDER]
-   - Nom/Raison Sociale
-   - Siège Social : Cotonou, République du Bénin
-   - Contact email
-   - Numéro WhatsApp : +229 96991128
-   - IFU (si disponible)
-
-2. **Hébergement** — Informations hébergeur [PLACEHOLDER à compléter]
-
-3. **Propriété Intellectuelle** — Protection des contenus objekté
-
-4. **Protection des Données Personnelles** — Référence loi n° 2017-20, droits RGPD béninois
-
-5. **Limitation de Responsabilité** — Clause standard
-
-### Design
-- Format épuré avec titres clairs
-- Texte juridique sobre
-- Placeholders visibles [ENTRE CROCHETS] pour les informations à fournir ultérieurement
+**Images à intégrer (6 au total) :**
+1. img1-2.jpg (citron dans le verre)
+2. img2-2.jpg (main tenant le filtre)
+3. img3-2.jpg (ambiance tropicale)
+4. img4-2.jpg (arc-en-ciel de gouttes)
+5. Picsart_26-01-28_08-46-25-380.png (gros plan filtre)
+6. Picsart_26-01-28_08-44-14-292.jpg (kit complet avec cartouches)
 
 ---
 
-## Navigation & Routing
+## Détails Techniques
 
-### Nouvelles routes à ajouter
-- `/archive` → Page L'Archive
-- `/confidentialite` → Politique de Confidentialité
-- `/cgv` → Conditions Générales de Vente
-- `/mentions-legales` → Mentions Légales
+### Fichiers à modifier
 
-### Mise à jour du Footer
-Ajout des liens vers les 3 pages légales dans le footer de toutes les pages :
-- Politique de Confidentialité
-- CGV
-- Mentions Légales
+**1. `src/components/layout/Header.tsx`**
+- Importer le composant Sheet et l'icône Menu
+- Ajouter un état pour gérer l'ouverture du menu mobile
+- Utiliser le hook `useIsMobile` pour détecter le type d'écran
+- Afficher le menu hamburger sur mobile, navigation classique sur desktop
 
-### Mise à jour du Header
-Ajout du lien "L'Archive" dans la navigation gauche (à côté de "La Sélection")
+**2. `src/pages/Paiement.tsx`**
+- Importer le composant Carousel existant
+- Importer les 6 images produit
+- Ajouter une section "Galerie Produit" avec le carousel avant le récapitulatif
+- Ajouter des dots de navigation personnalisés
+- Style cohérent avec le design objekté (coins arrondis, espace négatif)
+
+### Nouvelles images à copier
+Les 6 images uploadées seront copiées dans `src/assets/` :
+- img1-2.jpg, img2-2.jpg, img3-2.jpg, img4-2.jpg
+- Picsart_26-01-28_08-46-25-380.png
+- Picsart_26-01-28_08-44-14-292.jpg
 
 ---
 
-## Note technique : Envoi d'email SMTP
+## Résultat Attendu
 
-Comme demandé, l'envoi d'email sera géré côté client avec les credentials SMTP directement dans le code. La fonction utilisera un service d'envoi d'email compatible navigateur (comme EmailJS ou une approche similaire) pour envoyer les informations de commande à gerernoscommandes@gmail.com lors de la validation du paiement.
+### Sur Mobile
+- Header compact avec logo centré et menu hamburger
+- Menu latéral élégant avec tous les liens
+- Carousel d'images swipeable avec les 6 photos du produit
+- Experience fluide et intuitive pour les clients smartphone
+
+### Sur Desktop
+- Navigation classique conservée
+- Carousel avec flèches de navigation
+- Transition douce entre les images
 
