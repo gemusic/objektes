@@ -89,20 +89,26 @@ const ProductCarousel = () => {
         <ChevronRight className="h-5 w-5" />
       </button>
 
-      {/* Dots Navigation */}
-      <div className="flex justify-center gap-2 mt-4">
-        {productImages.map((_, index) => (
+      {/* Thumbnails Navigation */}
+      <div className="flex justify-center gap-2 mt-4 overflow-x-auto pb-2">
+        {productImages.map((image, index) => (
           <button
             key={index}
             onClick={() => scrollTo(index)}
             className={cn(
-              "w-2 h-2 rounded-full transition-all duration-300",
+              "flex-shrink-0 w-15 h-15 rounded-lg overflow-hidden transition-all duration-300",
               selectedIndex === index
-                ? "bg-primary w-6"
-                : "bg-secondary hover:bg-primary/50"
+                ? "ring-2 ring-primary ring-offset-2 opacity-100"
+                : "ring-1 ring-secondary opacity-70 hover:opacity-100"
             )}
-            aria-label={`Aller à l'image ${index + 1}`}
-          />
+            aria-label={`Voir image ${index + 1}`}
+          >
+            <img
+              src={image.src}
+              alt={image.alt}
+              className="w-full h-full object-cover"
+            />
+          </button>
         ))}
       </div>
     </div>
