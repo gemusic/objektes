@@ -1,28 +1,24 @@
 
 
-# Plan : Cohérence Visuelle avec l'Affiche Publicitaire + Miniatures Carousel
+# Plan : Ajout des Miniatures Produit au Carousel
 
-## Analyse de l'Affiche Publicitaire
-
-L'affiche Meta Ads utilise une esthétique parfaitement alignée avec le site :
-- Fond beige/crème texturé (Sable Pâle) - deja OK sur le site
-- Typographie serif pour le logo et les titres - deja OK
-- Utilisation d'italiques pour les phrases descriptives (style elegant)
-- Couleur terracotta/ocre pour les elements importants (prix, liens)
-- Beaucoup d'espace negatif - deja OK
-
-**Conclusion** : Le site est deja tres coherent avec l'affiche. Quelques ajustements typographiques mineurs peuvent renforcer cette coherence.
+## Objectif
+Remplacer les indicateurs a points (dots) actuels par des miniatures cliquables des images produit pour une meilleure experience utilisateur sur la page de paiement.
 
 ---
 
-## Modification 1 : Miniatures Cliquables pour le Carousel
+## Modification a effectuer
 
-**Fichier concerne** : `src/components/ProductCarousel.tsx`
+**Fichier** : `src/components/ProductCarousel.tsx`
 
-**Fonctionnalite** :
-Ajouter une rangee de miniatures en dessous de l'image principale qui permettent de naviguer rapidement entre les images.
+### Changements
 
-**Structure visuelle** :
+**1. Remplacement de la section "Dots Navigation" (lignes 92-107)**
+
+La section actuelle avec les petits points sera remplacee par une rangee de miniatures cliquables.
+
+**2. Structure des miniatures**
+
 ```text
 +----------------------------------------+
 |                                        |
@@ -36,53 +32,61 @@ Ajouter une rangee de miniatures en dessous de l'image principale qui permettent
 +----------------------------------------+
 ```
 
-**Comportement** :
-- Miniatures de 60x60px avec coins arrondis (8px)
-- Espacement de 8px entre chaque miniature
-- Miniature active : bordure terracotta (2px) + opacite 100%
-- Miniatures inactives : bordure grise fine (1px) + opacite 70%
-- Clic sur une miniature = navigation directe vers cette image
-- Sur mobile : miniatures scrollables horizontalement si necessaire
-- Transition fluide lors du changement d'image
+**3. Specifications visuelles**
 
-**Remplacement des dots** :
-Les miniatures remplaceront les dots actuels car elles offrent une meilleure experience utilisateur et montrent un apercu de chaque image.
+| Element | Style |
+|---------|-------|
+| Taille miniature | 60x60px (w-15 h-15) |
+| Coins | Arrondis (rounded-lg, ~8px) |
+| Espacement | gap-2 (8px entre chaque) |
+| Miniature active | Bordure Terracotta 2px + opacite 100% |
+| Miniatures inactives | Bordure grise fine 1px + opacite 70% |
+| Transition | Fluide (transition-all duration-300) |
 
----
+**4. Comportement**
 
-## Modification 2 : Renforcement de la Coherence Typographique
-
-**Fichier concerne** : `src/index.css`
-
-**Ajouts CSS** :
-Ajouter une classe utilitaire pour le style italique serif elegant utilise sur l'affiche :
-- `.text-elegant` : Applique la police serif en italique pour les citations et phrases descriptives premium
-
-**Usage sur les pages** :
-Cette classe pourra etre utilisee sur les phrases descriptives pour matcher le style "Protocole Hydratation" de l'affiche.
+- Clic sur une miniature = navigation directe vers cette image (`scrollTo(index)`)
+- Sur mobile : conteneur scrollable horizontalement si necessaire (`overflow-x-auto`)
+- Synchronisation automatique avec le swipe de l'image principale
 
 ---
 
-## Resume des Fichiers a Modifier
+## Code a implementer
 
-| Fichier | Action |
-|---------|--------|
-| `src/components/ProductCarousel.tsx` | Ajout des miniatures cliquables sous l'image principale |
-| `src/index.css` | Ajout de la classe `.text-elegant` pour le style italique serif |
+Remplacer les lignes 92-107 (section Dots Navigation) par :
+
+```tsx
+{/* Thumbnails Navigation */}
+<div className="flex justify-center gap-2 mt-4 overflow-x-auto pb-2">
+  {productImages.map((image, index) => (
+    <button
+      key={index}
+      onClick={() => scrollTo(index)}
+      className={cn(
+        "flex-shrink-0 w-15 h-15 rounded-lg overflow-hidden transition-all duration-300",
+        selectedIndex === index
+          ? "ring-2 ring-primary ring-offset-2 opacity-100"
+          : "ring-1 ring-secondary opacity-70 hover:opacity-100"
+      )}
+      aria-label={`Voir image ${index + 1}`}
+    >
+      <img
+        src={image.src}
+        alt={image.alt}
+        className="w-full h-full object-cover"
+      />
+    </button>
+  ))}
+</div>
+```
 
 ---
 
-## Resultat Final
+## Resultat Attendu
 
-### Page Paiement - Carousel Ameliore
-- Image principale grand format (swipeable sur mobile)
-- 6 miniatures cliquables en dessous
-- Miniature active clairement identifiee par une bordure terracotta
-- Navigation fluide entre les images
-
-### Coherence avec l'Affiche
-- Memes couleurs (Sable Pale, Anthracite, Terracotta)
-- Meme typographie serif elegante
-- Meme atmosphere calme et premium
-- Aucun dephasage visuel pour les visiteurs venant des Meta Ads
+- 6 miniatures alignees horizontalement sous l'image principale
+- Miniature active clairement identifiee par une bordure Terracotta
+- Navigation instantanee au clic sur n'importe quelle miniature
+- Experience tactile fluide sur mobile avec scrollable horizontal
+- Coherence visuelle avec le design objekté et l'affiche publicitaire
 
