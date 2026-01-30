@@ -55,6 +55,17 @@ const Paiement = () => {
     };
   }, []);
 
+  // Meta Pixel - InitiateCheckout
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'InitiateCheckout', {
+        value: 14000,
+        currency: 'XOF',
+        content_name: 'Le Purificateur Haute Précision (2 unités)'
+      });
+    }
+  }, []);
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));

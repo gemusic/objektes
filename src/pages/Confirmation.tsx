@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Check, MessageCircle, Calendar, Package, Phone, Truck } from "lucide-react";
@@ -32,6 +33,18 @@ const Confirmation = () => {
     month: 'long',
     year: 'numeric'
   });
+
+  // Meta Pixel - Purchase
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'Purchase', {
+        value: montant,
+        currency: 'XOF',
+        content_name: produit,
+        transaction_id: transactionId
+      });
+    }
+  }, [montant, produit, transactionId]);
 
   return (
     <Layout>
