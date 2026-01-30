@@ -1,82 +1,106 @@
 
 
-# Ajout des Événements de Conversion Meta Pixel
+# Correction du 404 sur Vercel + Validation Meta Pixel
 
-## Objectif
+## Le probleme
 
-Ajouter les événements `InitiateCheckout` et `Purchase` aux pages existantes pour optimiser tes campagnes Meta Ads, **sans modifier** la logique de paiement KKiaPay ni le design.
+Quand tu accedes directement a `objekte.store/paiement` ou que tu rafraichis la page, Vercel retourne **404: NOT_FOUND** parce que :
+
+1. Ton site est une **SPA (Single Page Application)** avec React Router
+2. Le routage se fait **cote client** (dans le navigateur)
+3. Vercel cherche un fichier `/paiement` sur le serveur, mais il n'existe pas
+4. Il faut dire a Vercel : "Toutes les routes doivent renvoyer vers `index.html`"
 
 ---
 
-## Modifications
+## Solution
 
-### 1. Page Paiement (`src/pages/Paiement.tsx`)
+Ajouter un fichier `vercel.json` a la racine du projet avec une regle de **rewrite** qui redirige toutes les requetes vers `index.html`.
 
-**Ajout d'un seul `useEffect`** après le useEffect KKiaPay existant (ligne 56) :
+---
 
-```tsx
-// Meta Pixel - InitiateCheckout
-useEffect(() => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('track', 'InitiateCheckout', {
-      value: 14000,
-      currency: 'XOF',
-      content_name: 'Le Purificateur Haute Précision (2 unités)'
-    });
-  }
-}, []);
+## Modification
+
+### Nouveau fichier : `vercel.json`
+
+```json
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
 ```
 
-**Ce qui ne change pas** : Tout le reste (formulaire, KKiaPay, redirections, emails)
+Cette configuration dit a Vercel :
+- Pour **toute URL** (ex: `/paiement`, `/confirmation`, `/faq`)
+- Renvoyer le contenu de `index.html`
+- React Router prendra ensuite le relais pour afficher la bonne page
 
 ---
 
-### 2. Page Confirmation (`src/pages/Confirmation.tsx`)
+## Ce qui ne change pas
 
-**Ajout d'un seul `useEffect`** après la déclaration de `formattedRenewalDate` (ligne 34) :
+| Element | Statut |
+|---------|--------|
+| Logique de paiement KKiaPay | Intact |
+| Formulaire client | Intact |
+| Redirections apres paiement | Intact |
+| Meta Pixel `InitiateCheckout` | Deja en place |
+| Meta Pixel `Purchase` | Deja en place |
+| Meta Pixel `PageView` | Deja en place |
+| Design et animations | Intact |
 
-```tsx
-// Meta Pixel - Purchase
-useEffect(() => {
-  if (typeof window !== 'undefined' && (window as any).fbq) {
-    (window as any).fbq('track', 'Purchase', {
-      value: montant,
-      currency: 'XOF',
-      content_name: produit,
-      transaction_id: transactionId
-    });
-  }
-}, []);
+---
+
+## Verification de l'implementation Meta Pixel actuelle
+
+Tout est deja correctement configure :
+
+| Fichier | Evenement | Statut |
+|---------|-----------|--------|
+| `index.html` | PageView (base pixel) | OK |
+| `src/pages/Paiement.tsx` | InitiateCheckout | OK (ligne 58-67) |
+| `src/pages/Confirmation.tsx` | Purchase | OK (ligne 37-47) |
+
+---
+
+## Apres deploiement
+
+1. Redeploy le projet sur Vercel
+2. Teste `objekte.store/paiement` en acces direct - la page doit s'afficher
+3. Installe l'extension **Meta Pixel Helper** sur Chrome
+4. Visite `/paiement` - tu dois voir `InitiateCheckout` dans l'extension
+5. Complete un paiement test - tu dois voir `Purchase` sur `/confirmation`
+6. Verifie dans **Meta Events Manager** que les evenements remontent
+
+---
+
+## Resume
+
+```text
++------------------+
+|   vercel.json    |  <-- NOUVEAU : redirige toutes les routes vers index.html
++------------------+
+         |
+         v
++------------------+
+|   index.html     |  <-- Meta Pixel base (PageView)
++------------------+
+         |
+         v
++------------------+
+|   React Router   |  <-- Gere /paiement, /confirmation, etc.
++------------------+
+         |
+    +----+----+
+    |         |
+    v         v
++--------+ +-------------+
+|Paiement| |Confirmation |
++--------+ +-------------+
+    |            |
+    v            v
+InitiateCheckout Purchase
+(Meta Pixel)    (Meta Pixel)
 ```
-
-**Note** : Il faut aussi ajouter `useEffect` à l'import React (ligne 1).
-
-**Ce qui ne change pas** : Tout le design, animations, copywriting, timeline
-
----
-
-## Résumé des Modifications
-
-| Fichier | Modification | Impact |
-|---------|-------------|--------|
-| `src/pages/Paiement.tsx` | +1 useEffect (6 lignes) | Aucun sur le design/paiement |
-| `src/pages/Confirmation.tsx` | +1 useEffect (6 lignes) + import useEffect | Aucun sur le design/animations |
-
----
-
-## Données Envoyées à Meta
-
-| Événement | Moment | Données |
-|-----------|--------|---------|
-| `InitiateCheckout` | Chargement page Paiement | value: 14000, currency: XOF |
-| `Purchase` | Chargement page Confirmation | value: montant, transaction_id, currency: XOF |
-
----
-
-## Résultat
-
-Après redéploiement sur https://objekte.store :
-- Meta Events Manager recevra les événements de conversion
-- Tu pourras optimiser tes campagnes pour les achats
-- Tu pourras créer des audiences de personnes ayant initié un checkout mais pas acheté
 
