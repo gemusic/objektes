@@ -1,193 +1,97 @@
 
 
-# Plan : Page de Confirmation Premium avec Experience Luxe
+# Integration du Pixel Meta (Facebook)
 
-## Objectif
+## Fichier a modifier
 
-Transformer la page de confirmation actuelle en une experience premium memorable qui :
-- Celebre le client comme un membre privilegie
-- Utilise des animations elegantes et fluides
-- Prepare le terrain pour la fidelisation (renouvellement tous les 3-4 mois)
-- Cree un sentiment d'appartenance a une communaute exclusive
-- Invite subtilement a decouvrir les prochaines Selections
+**`index.html`** - C'est le fichier principal de ton site, le pixel y sera charge sur toutes les pages automatiquement.
 
 ---
 
-## Architecture de la Page
+## Emplacement exact
 
-```text
-+================================================+
-|                                                |
-|    [Animation: Cercle lumineux pulsant]        |
-|              ✓ Icone check                     |
-|                                                |
-|    "Votre Selection est Confirmee"             |
-|    (Titre serif elegant avec fade-in)          |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|    Message de Bienvenue Personnalise           |
-|    "Cher [Nom], vous faites desormais          |
-|     partie du cercle objekté..."               |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|    Recapitulatif Elegant (carte sobre)         |
-|    - Reference transaction                     |
-|    - Montant                                   |
-|    - Email de confirmation                     |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|    "Dans les Prochaines Heures..."             |
-|    Timeline animee avec 3 etapes               |
-|    (1) Preparation (2) Contact (3) Livraison   |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|    "Votre Prochain Rendez-vous"                |
-|    Rappel subtil du renouvellement 3 mois      |
-|    avec date estimee                           |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|    "Selection n°2 : Bientot"                   |
-|    Teaser elegant pour la prochaine selection  |
-|    + CTA "Etre informe en priorite"            |
-|                                                |
-+------------------------------------------------+
-|                                                |
-|    Contact Concierge WhatsApp                  |
-|    Bouton elegant                              |
-|                                                |
-+------------------------------------------------+
+Le pixel Meta doit etre place dans la balise `<head>`, juste avant la fermeture `</head>`. C'est la position recommandee par Meta pour garantir un tracking optimal.
+
+---
+
+## Modification a effectuer
+
+Le fichier `index.html` sera modifie comme suit :
+
+```html
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lovable App</title>
+    <meta name="description" content="Lovable Generated Project" />
+    <meta name="author" content="Lovable" />
+
+    <meta property="og:title" content="Lovable App" />
+    <meta property="og:description" content="Lovable Generated Project" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Lovable" />
+    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+
+    <!-- Meta Pixel Code -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', '1256971542983914');
+      fbq('track', 'PageView');
+    </script>
+    <noscript>
+      <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=1256971542983914&ev=PageView&noscript=1"
+      />
+    </noscript>
+    <!-- End Meta Pixel Code -->
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
 ```
 
 ---
 
-## Nouvelles Animations a Ajouter
+## Ce que fait le pixel
 
-**Fichier** : `tailwind.config.ts`
-
-| Animation | Description | Utilisation |
-|-----------|-------------|-------------|
-| `pulse-soft` | Pulsation douce du cercle de succes | Icone check |
-| `scale-fade-in` | Apparition avec scale + fade | Elements principaux |
-| `slide-up` | Glissement vers le haut | Sections successives |
-| `shimmer` | Effet brillant subtil | Bordure de la carte |
+| Evenement | Description |
+|-----------|-------------|
+| `PageView` | Enregistre automatiquement chaque visite de page |
+| ID Pixel | `1256971542983914` (ton identifiant unique) |
 
 ---
 
-## Sections de la Page (Copywriting Premium)
+## Bonus recommande : Tracking des conversions
 
-### 1. Hero de Succes (Animations principales)
+Apres cette integration de base, tu pourras ajouter des evenements de conversion pour suivre :
 
-**Visuel** : Cercle Terracotta avec effet de pulsation lumineuse
-**Titre** : "Votre Selection est Confirmee"
-**Sous-titre personnalise** :
-> "Cher [Nom], bienvenue dans le cercle objekté. Vous venez de poser un geste simple mais decisif pour votre sante et celle de vos proches."
+- **Purchase** : Quand un client termine son paiement (page de confirmation)
+- **InitiateCheckout** : Quand un client commence le processus de paiement
+- **ViewContent** : Quand un client consulte la page produit
 
-### 2. Recapitulatif Elegant
-
-Carte sobre avec bordure fine :
-- Reference de transaction
-- Montant paye
-- Confirmation email envoyee
-
-### 3. Timeline "Dans les Prochaines Heures"
-
-Trois etapes animees sequentiellement :
-
-1. **Preparation Soignee**
-   > "Votre colis est prepare avec le soin reserve aux objets d'exception."
-
-2. **Prise de Contact**
-   > "Notre equipe vous contactera personnellement pour convenir du moment ideal."
-
-3. **Remise en Main Propre**
-   > "Livraison directe chez vous a Cotonou, sans intermediaire."
-
-### 4. Section "Votre Prochain Rendez-vous"
-
-> "Dans environ 3 mois, votre cartouche aura accompli sa mission. Nous serons la pour vous accompagner dans le renouvellement — sans effort, sans oubli."
-
-- Affichage de la date estimee (date actuelle + 90 jours)
-- CTA subtil "Recevoir un rappel"
-
-### 5. Teaser "Selection n°2 : A Venir"
-
-> "Nous preparons deja la prochaine piece maitresse de votre quotidien. Une selection unique, choisie avec la meme rigueur pour transformer un autre aspect de votre vie."
-
-- CTA "Etre informe en priorite" (lien WhatsApp ou futur formulaire)
-
-### 6. Assistance Concierge
-
-> "Une question ? Notre concierge personnel est a votre disposition."
-- Bouton WhatsApp elegant
+Ces evenements supplementaires peuvent etre ajoutes dans les composants React concernes si tu le souhaites.
 
 ---
 
-## Modifications de Fichiers
+## Resultat attendu
 
-### 1. `tailwind.config.ts`
-Ajout de nouvelles animations :
-- `pulse-soft` : pour le cercle de succes
-- `shimmer` : effet brillant subtil
-- `slide-up-delayed` : apparitions sequentielles
-
-### 2. `src/pages/Confirmation.tsx`
-Refonte complete avec :
-- Nouvelles sections et copywriting premium
-- Animations sequentielles avec delais
-- Calcul automatique de la date de renouvellement
-- Integration du teaser Selection n°2
-- Design raffine avec espacement genereux
-
----
-
-## Details Techniques
-
-### Calcul de la Date de Renouvellement
-
-```tsx
-const renewalDate = new Date();
-renewalDate.setMonth(renewalDate.getMonth() + 3);
-const formattedDate = renewalDate.toLocaleDateString('fr-FR', {
-  month: 'long',
-  year: 'numeric'
-});
-// Resultat : "avril 2026"
-```
-
-### Animations Sequentielles
-
-Chaque section apparait avec un delai croissant :
-- Hero : 0s
-- Message : 0.2s
-- Recapitulatif : 0.3s
-- Timeline : 0.4s, 0.5s, 0.6s (chaque etape)
-- Renouvellement : 0.7s
-- Teaser : 0.8s
-- Contact : 0.9s
-
-### Palette de Couleurs Utilisees
-
-| Element | Couleur |
-|---------|---------|
-| Cercle succes | `bg-primary/10` avec `ring-primary` |
-| Icone check | `text-primary` |
-| Cartes | `bg-secondary/20` |
-| Separateurs | `bg-secondary` |
-| Texte principal | `text-foreground` |
-| Texte secondaire | `text-foreground/70` |
-
----
-
-## Resultat Attendu
-
-- Page de confirmation qui "respire le luxe" avec animations fluides
-- Client se sentant membre d'un cercle privilegie
-- Rappel subtil du renouvellement pour fidelisation
-- Teaser pour les futures selections creant anticipation
-- Coherence totale avec l'identite objekté et les Meta Ads
+- Le pixel Meta sera actif sur toutes les pages du site
+- Chaque visite sera enregistree dans ton Meta Events Manager
+- Tu pourras creer des audiences personnalisees pour tes publicites
+- Le tracking fonctionnera meme avec JavaScript desactive (grace a la balise noscript)
 
