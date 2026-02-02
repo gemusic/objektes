@@ -34,14 +34,17 @@ const Confirmation = () => {
     year: 'numeric'
   });
 
-  // Meta Pixel - Purchase
+  // Meta Pixel - Purchase (enrichi pour campagnes Ventes)
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'Purchase', {
+        content_name: produit,
+        content_ids: ['purificateur-001'],
+        content_type: 'product',
         value: montant,
         currency: 'XOF',
-        content_name: produit,
-        transaction_id: transactionId
+        transaction_id: transactionId,
+        num_items: 2
       });
     }
   }, [montant, produit, transactionId]);

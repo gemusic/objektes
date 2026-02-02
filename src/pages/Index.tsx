@@ -1,8 +1,36 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import img1 from "@/assets/img1.jpg";
 
 const Index = () => {
+  // Meta Pixel - ViewContent (obligatoire pour campagnes Ventes)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'ViewContent', {
+        content_name: 'Le Purificateur Haute Précision',
+        content_category: 'Filtration eau',
+        content_ids: ['purificateur-001'],
+        content_type: 'product',
+        value: 14000,
+        currency: 'XOF'
+      });
+    }
+  }, []);
+
+  // Meta Pixel - AddToCart (clic sur le CTA)
+  const handleAddToCart = () => {
+    if ((window as any).fbq) {
+      (window as any).fbq('track', 'AddToCart', {
+        content_name: 'Le Purificateur Haute Précision',
+        content_ids: ['purificateur-001'],
+        content_type: 'product',
+        value: 14000,
+        currency: 'XOF'
+      });
+    }
+  };
+
   return (
     <Layout>
       {/* Section Héros */}
@@ -37,6 +65,7 @@ const Index = () => {
           <div className="animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <Link
               to="/paiement"
+              onClick={handleAddToCart}
               className="inline-block bg-primary text-primary-foreground px-10 py-5 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
             >
               Sélectionner — 14 000 FCFA
