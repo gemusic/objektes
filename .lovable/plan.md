@@ -1,67 +1,114 @@
 
-# Synchronisation du deploiement objekte.store
+# Integration EmailJS pour les notifications de commande
 
-## Diagnostic
+## Resume
 
-Le code dans ce projet Lovable est deja correctement configure :
+Integration du service EmailJS pour envoyer automatiquement les details de commande a `gerernoscommandes@gmail.com` quand un client finalise son paiement.
 
-| Element | Valeur actuelle | Statut |
-|---------|-----------------|--------|
-| og:title | OBJEKTE - Le Purificateur Haute Precision | OK |
-| og:description | Votre corps n'est pas un filtre... | OK |
-| og:image | https://objekte.store/og-image.jpg | OK |
-| og:url | https://objekte.store | OK |
-| twitter:title | OBJEKTE - Le Purificateur Haute Precision | OK |
-| twitter:image | https://objekte.store/og-image.jpg | OK |
-| Image og-image.jpg | Presente dans /public | OK |
-| vercel.json | Rewrite vers index.html | OK |
+## Identifiants EmailJS configures
 
-Le Facebook Debugger affiche encore "Lovable" parce que le site sur `objekte.store` pointe vers une ancienne version qui n'a pas ete mise a jour avec ce code.
+| Element | Valeur |
+|---------|--------|
+| Service ID | service_p4n5ask |
+| Template ID | template_eubvd3i |
+| Public Key | aJ3NEMS0ioc1VbC56 |
 
----
+## Modifications a effectuer
 
-## Solution
+### 1. Installer la dependance EmailJS
 
-### Etape 1 : Deployer ce projet sur Vercel
+Ajouter le package `@emailjs/browser` au projet.
 
-Tu dois connecter ce projet Lovable a ton projet Vercel pour que les modifications soient en ligne.
+### 2. Modifier `src/pages/Paiement.tsx`
 
-**Option A - Via GitHub :**
-1. Exporte ce projet vers GitHub (bouton "GitHub" dans Lovable)
-2. Connecte le repo a ton projet Vercel existant
-3. Vercel deploiera automatiquement
+**Changements prevus :**
 
-**Option B - Via Lovable directement :**
-1. Utilise la fonction "Publish" de Lovable
-2. Configure le domaine personnalise `objekte.store`
+- **Ligne 1** : Ajouter l'import de EmailJS
+- **Lignes 16-20** : Supprimer la configuration SMTP inutilisee (les identifiants Gmail exposes)
+- **Lignes 16-20** : Ajouter la configuration EmailJS avec tes identifiants
+- **Lignes 97-125** : Remplacer la fonction `sendOrderEmail` simulee par une vraie implementation EmailJS
 
----
+### Nouveau code de configuration (remplace SMTP_CONFIG)
 
-### Etape 2 : Rafraichir le cache Facebook
+```typescript
+import emailjs from '@emailjs/browser';
 
-Apres le deploiement :
-1. Va sur https://developers.facebook.com/tools/debug/
-2. Entre `https://objekte.store`
-3. Clique sur **"Scrape Again"** (Re-collecter)
-4. Verifie que les nouvelles metadonnees apparaissent
-
----
-
-## Aucune modification de code necessaire
-
-Le code est deja correct. Pas besoin de toucher a `index.html` ou aux autres fichiers. Il faut juste deployer cette version sur `objekte.store`.
-
----
-
-## Verification finale attendue dans Facebook Debugger
-
-Apres deploiement et "Scrape Again", tu devrais voir :
-
-```text
-og:title        : OBJEKTÉ - Le Purificateur Haute Précision
-og:description  : Votre corps n'est pas un filtre. Votre organisme mérite...
-og:image        : https://objekte.store/og-image.jpg (image de ton produit)
-og:url          : https://objekte.store
+// Configuration EmailJS
+const EMAILJS_SERVICE_ID = "service_p4n5ask";
+const EMAILJS_TEMPLATE_ID = "template_eubvd3i";
+const EMAILJS_PUBLIC_KEY = "aJ3NEMS0ioc1VbC56";
 ```
 
-Et l'apercu du lien affichera ton produit au lieu du logo Lovable.
+### Nouvelle fonction sendOrderEmail
+
+```typescript
+const sendOrderEmail = async (transactionId: string) => {
+  try {
+    const templateParams = {
+      nom: formData.nom,
+      email: formData.email,
+      telephone: formData.telephone,
+      adresse: formData.adresse,
+      produit: produitNom,
+      montant: montant.toLocaleString(),
+      transactionId: transactionId,
+      date: new Date().toLocaleString('fr-FR')
+    };
+
+    const response = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams,
+      EMAILJS_PUBLIC_KEY
+    );
+
+    console.log("Email envoye avec succes:", response);
+    return response.status === 200;
+  } catch (error) {
+    console.error("Erreur envoi email:", error);
+    return false;
+  }
+};
+```
+
+## Flux apres implementation
+
+```text
+Client remplit le formulaire
+         |
+         v
+Client clique "Payer 14,000 FCFA"
+         |
+         v
+    KKiaPay s'ouvre
+         |
+         v
+  Paiement reussi
+         |
+         v
+EmailJS envoie l'email ------> gerernoscommandes@gmail.com
+         |                     (tu recois: nom, email, telephone,
+         |                      adresse, produit, montant, date)
+         v
+Page de confirmation
+```
+
+## Resultat attendu
+
+Apres cette modification, des qu'un client termine son paiement KKiaPay, tu recevras immediatement un email a `gerernoscommandes@gmail.com` contenant :
+
+- Nom du client
+- Email du client
+- Numero de telephone
+- Adresse de livraison
+- Produit commande
+- Montant paye
+- ID de transaction
+- Date et heure
+
+## Avantages
+
+- Aucun serveur necessaire
+- Fonctionne directement depuis le navigateur
+- 200 emails gratuits par mois
+- Configuration terminee en quelques secondes
