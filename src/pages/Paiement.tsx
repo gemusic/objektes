@@ -55,13 +55,16 @@ const Paiement = () => {
     };
   }, []);
 
-  // Meta Pixel - InitiateCheckout
+  // Meta Pixel - InitiateCheckout (enrichi pour campagnes Ventes)
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'InitiateCheckout', {
+        content_name: 'Le Purificateur Haute Précision (2 unités)',
+        content_ids: ['purificateur-001'],
+        content_type: 'product',
         value: 14000,
         currency: 'XOF',
-        content_name: 'Le Purificateur Haute Précision (2 unités)'
+        num_items: 2
       });
     }
   }, []);
