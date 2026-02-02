@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import emailjs from '@emailjs/browser';
 import { useSearchParams, useNavigate } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Input } from "@/components/ui/input";
@@ -13,11 +14,10 @@ const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER.replace("+", "")}`;
 // KKiaPay Configuration
 const KKIAPAY_PUBLIC_KEY = "be93f6efefe24a436e8b22c95e490373b2dbc283";
 
-// SMTP Configuration (côté client comme demandé)
-const SMTP_CONFIG = {
-  email: "gerernoscommandes@gmail.com",
-  password: "sjui nygc otpy vwrp"
-};
+// Configuration EmailJS
+const EMAILJS_SERVICE_ID = "service_p4n5ask";
+const EMAILJS_TEMPLATE_ID = "template_eubvd3i";
+const EMAILJS_PUBLIC_KEY = "aJ3NEMS0ioc1VbC56";
 
 interface FormData {
   email: string;
@@ -95,33 +95,31 @@ const Paiement = () => {
   };
 
   const sendOrderEmail = async (transactionId: string) => {
-    // Envoi email via EmailJS (service compatible navigateur)
-    // Note: Dans un environnement de production, vous devriez configurer EmailJS
-    const orderDetails = `
-Nouvelle commande objekté!
+    try {
+      const templateParams = {
+        nom: formData.nom,
+        email: formData.email,
+        telephone: formData.telephone,
+        adresse: formData.adresse,
+        produit: produitNom,
+        montant: montant.toLocaleString(),
+        transactionId: transactionId,
+        date: new Date().toLocaleString('fr-FR')
+      };
 
-📦 DÉTAILS DE LA COMMANDE
-━━━━━━━━━━━━━━━━━━━━━━━━
-Produit: ${produitNom}
-Montant: ${montant.toLocaleString()} FCFA
-Transaction ID: ${transactionId}
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams,
+        EMAILJS_PUBLIC_KEY
+      );
 
-👤 INFORMATIONS CLIENT
-━━━━━━━━━━━━━━━━━━━━━━━━
-Nom: ${formData.nom}
-Email: ${formData.email}
-Téléphone: ${formData.telephone}
-Adresse: ${formData.adresse}
-
-📅 Date: ${new Date().toLocaleString('fr-FR')}
-    `;
-    
-    console.log("Détails de la commande à envoyer:", orderDetails);
-    console.log("Configuration SMTP:", SMTP_CONFIG.email);
-    
-    // Pour l'envoi réel, utilisez un service comme EmailJS ou configurez une API backend
-    // Ici on simule l'envoi réussi
-    return true;
+      console.log("Email envoyé avec succès:", response);
+      return response.status === 200;
+    } catch (error) {
+      console.error("Erreur envoi email:", error);
+      return false;
+    }
   };
 
   const handlePayment = async () => {
