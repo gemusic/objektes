@@ -21,7 +21,7 @@ const Confirmation = () => {
   const { 
     transactionId = "N/A", 
     produit = "Le Purificateur Haute Précision",
-    montant = 5000,
+    montant = 5500,
     nom = "",
     email = ""
   } = state;
@@ -41,7 +41,7 @@ const Confirmation = () => {
         content_name: produit,
         content_ids: ['purificateur-001'],
         content_type: 'product',
-        value: 5000,
+        value: 5500,
         currency: 'XOF',
         transaction_id: transactionId,
         num_items: 2

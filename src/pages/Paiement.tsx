@@ -31,7 +31,7 @@ const Paiement = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const montant = 5000;
+  const montant = 5500;
   const produitNom = "Le Purificateur Haute Précision (2 unités)";
   
   const [formData, setFormData] = useState<FormData>({
@@ -62,7 +62,7 @@ const Paiement = () => {
         content_name: 'Le Purificateur Haute Précision (2 unités)',
         content_ids: ['purificateur-001'],
         content_type: 'product',
-        value: 5000,
+        value: 5500,
         currency: 'XOF',
         num_items: 2
       });
@@ -139,10 +139,13 @@ const Paiement = () => {
           amount: montant,
           position: "center",
           callback: "",
-          data: "",
+          data: JSON.stringify({ orderId: Date.now() }),
           theme: "#A66B4C",
           key: KKIAPAY_PUBLIC_KEY,
-          sandbox: false
+          sandbox: false,
+          name: formData.nom,
+          email: formData.email,
+          phone: formData.telephone
         });
 
         // Écouter les événements KKiaPay
