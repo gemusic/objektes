@@ -31,7 +31,7 @@ const Paiement = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   
-  const montant = 14000;
+  const montant = 5000;
   const produitNom = "Le Purificateur Haute Précision (2 unités)";
   
   const [formData, setFormData] = useState<FormData>({
@@ -62,7 +62,7 @@ const Paiement = () => {
         content_name: 'Le Purificateur Haute Précision (2 unités)',
         content_ids: ['purificateur-001'],
         content_type: 'product',
-        value: 14000,
+        value: 5000,
         currency: 'XOF',
         num_items: 2
       });
