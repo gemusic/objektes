@@ -13,7 +13,7 @@ const Index = () => {
         content_category: 'Filtration eau',
         content_ids: ['purificateur-001'],
         content_type: 'product',
-        value: 5000,
+        value: 5500,
         currency: 'XOF'
       });
     }
@@ -26,7 +26,7 @@ const Index = () => {
         content_name: 'Le Purificateur Haute Précision',
         content_ids: ['purificateur-001'],
         content_type: 'product',
-        value: 5000,
+        value: 5500,
         currency: 'XOF'
       });
     }
@@ -113,7 +113,7 @@ const Index = () => {
               onClick={handleAddToCart}
               className="inline-block bg-primary text-primary-foreground px-10 py-5 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
             >
-              Protéger ma famille — 5 000 FCFA
+              Protéger ma famille — 5 500 FCFA
             </Link>
             <p className="text-sm text-muted-foreground mt-4">
               Livraison gratuite à Cotonou. Installation en 2 minutes.
@@ -332,7 +332,7 @@ const Index = () => {
       {/* ========== SECTION 6 : L'OFFRE ========== */}
       <section className="max-w-4xl mx-auto px-6 py-20">
         <h2 className="font-serif text-3xl md:text-4xl text-center mb-4">
-          5 000 FCFA pour 6 mois de protection
+          5 500 FCFA pour 6 mois de protection
         </h2>
         <p className="text-center text-muted-foreground mb-12">
           Deux unités. Zéro souci. Vos reins vous remercieront.
@@ -364,7 +364,7 @@ const Index = () => {
             </li>
           </ul>
           <div className="text-center">
-            <p className="font-serif text-4xl text-primary mb-2">5 000 FCFA</p>
+            <p className="font-serif text-4xl text-primary mb-2">5 500 FCFA</p>
             <p className="text-sm text-muted-foreground">Paiement unique. Pas d'abonnement.</p>
           </div>
         </div>
@@ -396,7 +396,7 @@ const Index = () => {
             onClick={handleAddToCart}
             className="inline-block bg-primary text-primary-foreground px-10 py-5 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
           >
-            Commander maintenant — 5 000 FCFA
+            Commander maintenant — 5 500 FCFA
           </Link>
           <p className="text-sm text-muted-foreground mt-4">
             Mobile Money (MTN MoMo / Moov) ou Carte Bancaire

@@ -101,7 +101,7 @@ const Archive = () => {
           to="/paiement"
           className="inline-block bg-primary text-primary-foreground px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
         >
-          Commander 2 nouvelles unités — 14 000 FCFA
+          Commander 2 nouvelles unités — 5 500 FCFA
         </Link>
         <p className="text-sm text-foreground/50 mt-6">
           Même quand nous passons à la Sélection n°2, vous pouvez toujours maintenir 
