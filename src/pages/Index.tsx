@@ -56,7 +56,7 @@ const Index = () => {
   const faqs = [
     {
       question: "Combien de temps dure le filtre ?",
-      answer: "Chaque unité offre environ 3 mois de filtration. Vous recevez 2 unités, soit 6 mois d'eau pure pour protéger votre famille."
+      answer: "Chaque unité offre environ 3 mois de filtration. Vous recevez 1 unité offrant 3 mois d'eau pure pour protéger votre famille."
     },
     {
       question: "Est-ce compatible avec mon robinet ?",
@@ -271,7 +271,7 @@ const Index = () => {
             </div>
             <h3 className="font-serif text-xl mb-3">3. Protégez</h3>
             <p className="text-foreground/70 leading-relaxed">
-              Buvez une eau pure, sans chlore, sans rouille, sans métaux lourds. Pendant 6 mois.
+              Buvez une eau pure, sans chlore, sans rouille, sans métaux lourds. Pendant 3 mois.
             </p>
           </div>
         </div>
@@ -332,10 +332,10 @@ const Index = () => {
       {/* ========== SECTION 6 : L'OFFRE ========== */}
       <section className="max-w-4xl mx-auto px-6 py-20">
         <h2 className="font-serif text-3xl md:text-4xl text-center mb-4">
-          5 500 FCFA pour 6 mois de protection
+          5 500 FCFA pour 3 mois de protection
         </h2>
         <p className="text-center text-muted-foreground mb-12">
-          Deux unités. Zéro souci. Vos reins vous remercieront.
+          Une unité. Zéro souci. Vos reins vous remercieront.
         </p>
 
         {/* Encadré Offre */}
@@ -352,7 +352,7 @@ const Index = () => {
             </li>
             <li className="flex items-start gap-3">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-              <span>2 unités incluses (~3 mois chacune = 6 mois)</span>
+              <span>1 unité incluse (~3 mois de filtration)</span>
             </li>
             <li className="flex items-start gap-3">
               <Check className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
@@ -384,8 +384,8 @@ const Index = () => {
         <div className="bg-secondary/30 p-8 rounded-lg mb-12">
           <h3 className="font-serif text-xl mb-4 text-center">L'économie intelligente</h3>
           <p className="text-center text-foreground/80 leading-relaxed max-w-lg mx-auto">
-            En 6 mois, vous dépensez environ <strong>30 000 FCFA</strong> en eau en bouteille ou bonbonnes. 
-            Avec objekté, vous économisez <strong>25 000 FCFA</strong>… et vous protégez vos reins.
+            En 3 mois, vous dépensez environ <strong>15 000 FCFA</strong> en eau en bouteille ou bonbonnes. 
+            Avec objekté, vous économisez <strong>9 500 FCFA</strong>… et vous protégez vos reins.
           </p>
         </div>
 
