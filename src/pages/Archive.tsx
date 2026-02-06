@@ -91,17 +91,17 @@ const Archive = () => {
       {/* Section Renouvellement */}
       <section className="max-w-4xl mx-auto px-6 py-20 text-center">
         <h2 className="font-serif text-2xl mb-6">
-          Besoin de renouveler vos unités de filtration ?
+          Besoin de renouveler votre unité de filtration ?
         </h2>
         <p className="text-muted-foreground max-w-xl mx-auto mb-8">
-          Après 6 mois d'utilisation, vos deux unités auront accompli leur mission. 
-          Renouvelez-les pour continuer à profiter d'une eau pure.
+          Après 3 mois d'utilisation, votre unité aura accompli sa mission. 
+          Renouvelez-la pour continuer à profiter d'une eau pure.
         </p>
         <Link
           to="/paiement"
           className="inline-block bg-primary text-primary-foreground px-8 py-4 text-sm tracking-widest uppercase transition-all duration-300 hover:opacity-90"
         >
-          Commander 2 nouvelles unités — 5 500 FCFA
+          Commander 1 nouvelle unité — 5 500 FCFA
         </Link>
         <p className="text-sm text-foreground/50 mt-6">
           Même quand nous passons à la Sélection n°2, vous pouvez toujours maintenir 

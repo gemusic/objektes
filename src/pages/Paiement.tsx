@@ -32,7 +32,7 @@ const Paiement = () => {
   const { toast } = useToast();
   
   const montant = 5500;
-  const produitNom = "Le Purificateur Haute Précision (2 unités)";
+  const produitNom = "Le Purificateur Haute Précision (1 unité)";
   
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -59,12 +59,12 @@ const Paiement = () => {
   useEffect(() => {
     if (typeof window !== 'undefined' && (window as any).fbq) {
       (window as any).fbq('track', 'InitiateCheckout', {
-        content_name: 'Le Purificateur Haute Précision (2 unités)',
+        content_name: 'Le Purificateur Haute Précision (1 unité)',
         content_ids: ['purificateur-001'],
         content_type: 'product',
         value: 5500,
         currency: 'XOF',
-        num_items: 2
+        num_items: 1
       });
     }
   }, []);
@@ -226,7 +226,7 @@ const Paiement = () => {
           <div className="p-6 bg-secondary/20 rounded-lg space-y-3">
             <div className="flex justify-between">
               <span className="text-foreground/70">
-                Sélection n°1 : Le Purificateur Haute Précision (2 unités)
+                Sélection n°1 : Le Purificateur Haute Précision (1 unité)
               </span>
               <span className="font-medium">{montant.toLocaleString()} FCFA</span>
             </div>
@@ -242,7 +242,7 @@ const Paiement = () => {
           </div>
           
           <p className="text-sm text-muted-foreground mt-4 text-center">
-            Chaque unité offre environ 3 mois de filtration — soit 6 mois d'eau pure pour vos deux unités.
+            Votre unité offre environ 3 mois de filtration — soit 3 mois d'eau pure.
           </p>
         </section>
 
